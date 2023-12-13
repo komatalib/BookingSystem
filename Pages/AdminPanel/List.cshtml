@@ -1,0 +1,32 @@
+﻿@page
+@model BookingSystem.Pages.AdminPanel.ListModel
+@{
+}
+
+<h1 class="mb-3">List Of Customers</h1>
+
+@if(Model.Customers != null && Model.Customers.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>LastName</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var customer in Model.Customers)
+            {
+                <tr>
+                    <td>@customer.LastName</td>
+                    <td>@customer.Phone</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+else
+{
+    <p>No customers found!</p>
+}
