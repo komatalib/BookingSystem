@@ -12,6 +12,7 @@
             <tr>
                 <th>LastName</th>
                 <th>Phone</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +21,9 @@
                 <tr>
                     <td>@customer.LastName</td>
                     <td>@customer.Phone</td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-CustomerID="@customer.CustomerID" class="btn btn-dark">Edit</a>
+                    </td>
                 </tr>
             }
         </tbody>

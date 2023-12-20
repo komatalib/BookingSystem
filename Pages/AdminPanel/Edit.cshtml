@@ -1,4 +1,37 @@
-﻿@page
+﻿@page 
 @model BookingSystem.Pages.AdminPanel.EditModel
 @{
+    ViewData["Title"] = "Edit Customer";
 }
+
+<form method="post">
+    <h1 class="mb-3">Edit Customer</h1>
+
+    <!-- Include a hidden field to retain the CustomerID during form submission -->
+    <input type="hidden" name="" asp-for="EditCustomerViewModel.CustomerID" />
+
+
+    <div class="mb-3">
+        <label class="col-form-label">Name</label>
+        <input type="text" class="form-control" name="firstName" asp-for="EditCustomerViewModel.FirstName" />
+    </div>
+    <div class="mb-3">
+        <label class="col-form-label">Surname</label>
+        <input type="text" class="form-control" name="lastName" asp-for="EditCustomerViewModel.LastName" />
+    </div>
+    <div class="mb-3">
+        <label class="col-form-label">Phone</label>
+        <input type="text" class="form-control" name="phone" asp-for="EditCustomerViewModel.Phone" />
+    </div>
+    <div class="mb-3">
+        <label class="col-form-label">Email</label>
+        <input type="text" class="form-control" name="emailAdress" asp-for="EditCustomerViewModel.EmailAdress" />
+    </div>
+    <div class="mb-3">
+        <label class="col-form-label">Plan</label>
+        <input type="number" class="form-control" name="plan" asp-for="EditCustomerViewModel.Plan" />
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+</form>

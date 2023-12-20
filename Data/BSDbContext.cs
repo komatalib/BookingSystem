@@ -9,5 +9,6 @@ namespace BookingSystem.Data
         { }
 
         public DbSet<Customers> Customers { get; set; }
+        public DbSet<Plans> Plans { get; set; }
     }
 }

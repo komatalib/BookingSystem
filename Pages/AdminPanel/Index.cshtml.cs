@@ -17,8 +17,11 @@ namespace BookingSystem.Pages.AdminPanel
 
         [BindProperty]
         public AddCustomerViewModel AddCustomer { get; set; }
+        [BindProperty]
+        public List<Plans> Plans { get; set; }
         public void OnGet()
         {
+            Plans = dbContext.Plans.ToList();
         }
 
         public void OnPost()
