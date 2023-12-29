@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BookingSystem.Models.Domain
 {
-    
     public class Customers
     {
         [Key]
@@ -12,6 +11,8 @@ namespace BookingSystem.Models.Domain
         public string LastName { get; set; }
         public string EmailAdress { get; set; }
         public string Phone { get; set; }
-        public int Plan {  get; set; }
+        // Foreign key property
+        public int PlanID { get; set; }
+        public Plans Plans { get; set; }
     }
 }

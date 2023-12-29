@@ -10,8 +10,12 @@
     <table class="table">
         <thead>
             <tr>
-                <th>LastName</th>
+                <th>Name</th>
+                <th>Surname</th>
                 <th>Phone</th>
+                <th>Email</th>
+                <th>Plan</th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -19,10 +23,17 @@
             @foreach(var customer in Model.Customers)
             {
                 <tr>
+                    <td>@customer.FirstName</td>
                     <td>@customer.LastName</td>
                     <td>@customer.Phone</td>
+                    <td>@customer.EmailAdress</td>
+                    <td>@customer.Plans.Plan</td>
                     <td>
                         <a asp-page="./Edit" asp-route-CustomerID="@customer.CustomerID" class="btn btn-dark">Edit</a>
+                    </td>
+                    <td>
+                        <a asp-page-handler="Delete" asp-route-CustomerID="@customer.CustomerID" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this customer?')">Delete</a>
+
                     </td>
                 </tr>
             }

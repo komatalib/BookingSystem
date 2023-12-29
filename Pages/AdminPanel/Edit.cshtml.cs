@@ -1,4 +1,5 @@
 using BookingSystem.Data;
+using BookingSystem.Models.Domain;
 using BookingSystem.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,10 +10,13 @@ namespace BookingSystem.Pages.AdminPanel
     public class EditModel : PageModel
     {
         private readonly BSDbContext dbContext;
+
         [BindProperty(SupportsGet = true)]
         public int CustomerID { get; set; }
         [BindProperty]
         public EditCustomerViewModel EditCustomerViewModel { get; set; }
+        [BindProperty]
+        public List<Plans> Plans { get; set; }
         public EditModel(BSDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -20,7 +24,10 @@ namespace BookingSystem.Pages.AdminPanel
 
         public void OnGet()
         {
+            Plans = dbContext.Plans.ToList();
+
             var customer = dbContext.Customers.Find(CustomerID);
+
             if (customer != null)
             {
                 EditCustomerViewModel = new EditCustomerViewModel()
@@ -29,7 +36,7 @@ namespace BookingSystem.Pages.AdminPanel
                     Phone = customer.Phone,
                     FirstName = customer.FirstName,
                     EmailAdress = customer.EmailAdress,
-                    Plan = customer.Plan
+                    PlanID = customer.PlanID
                 };
             }
         }
@@ -37,6 +44,8 @@ namespace BookingSystem.Pages.AdminPanel
         {
             if (EditCustomerViewModel != null)
             {
+                
+
                 var currentCustomer = dbContext.Customers.FirstOrDefault(w => w.CustomerID == CustomerID);
                 if (currentCustomer != null)
                 {
@@ -44,7 +53,7 @@ namespace BookingSystem.Pages.AdminPanel
                     currentCustomer.Phone = EditCustomerViewModel.Phone;
                     currentCustomer.FirstName = EditCustomerViewModel.FirstName;
                     currentCustomer.EmailAdress = EditCustomerViewModel.EmailAdress;
-                    currentCustomer.Plan = EditCustomerViewModel.Plan;
+                    currentCustomer.PlanID = EditCustomerViewModel.PlanID;
 
                     dbContext.SaveChanges();
                 }

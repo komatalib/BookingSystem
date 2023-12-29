@@ -13,23 +13,30 @@
 
     <div class="mb-3">
         <label class="col-form-label">Name</label>
-        <input type="text" class="form-control" name="firstName" asp-for="EditCustomerViewModel.FirstName" />
+        <input type="text" class="form-control" name="EditCustomerViewModel.FirstName" asp-for="EditCustomerViewModel.FirstName" />
     </div>
     <div class="mb-3">
         <label class="col-form-label">Surname</label>
-        <input type="text" class="form-control" name="lastName" asp-for="EditCustomerViewModel.LastName" />
+        <input type="text" class="form-control" name="EditCustomerViewModel.LastName" asp-for="EditCustomerViewModel.LastName" />
     </div>
     <div class="mb-3">
         <label class="col-form-label">Phone</label>
-        <input type="text" class="form-control" name="phone" asp-for="EditCustomerViewModel.Phone" />
+        <input type="text" class="form-control" name="EditCustomerViewModel.Phone" asp-for="EditCustomerViewModel.Phone" />
     </div>
     <div class="mb-3">
         <label class="col-form-label">Email</label>
-        <input type="text" class="form-control" name="emailAdress" asp-for="EditCustomerViewModel.EmailAdress" />
+        <input type="text" class="form-control" name="EditCustomerViewModel.EmailAdress" asp-for="EditCustomerViewModel.EmailAdress" />
     </div>
     <div class="mb-3">
-        <label class="col-form-label">Plan</label>
-        <input type="number" class="form-control" name="plan" asp-for="EditCustomerViewModel.Plan" />
+        <label for="selectPlan" class="col-form-label">Plan</label>
+        <select id="selectPlan" name="EditCustomerViewModel.PlanID" class="form-control w-50">
+    @foreach (var plan in Model.Plans)
+    {
+        <option value="@plan.PlanID" selected="@(plan.PlanID == Model.EditCustomerViewModel.PlanID)">@plan.Plan</option>
+    }
+</select>
+
+
     </div>
     <div class="mb-3">
         <button type="submit" class="btn btn-primary">Update</button>

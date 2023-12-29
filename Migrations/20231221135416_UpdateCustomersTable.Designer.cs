@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookingSystem.Migrations
 {
     [DbContext(typeof(BSDbContext))]
-    [Migration("20231213101144_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20231221135416_UpdateCustomersTable")]
+    partial class UpdateCustomersTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,7 +26,10 @@ namespace BookingSystem.Migrations
             modelBuilder.Entity("BookingSystem.Models.Domain.Customers", b =>
                 {
                     b.Property<int>("CustomerID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerID"), 1L, 1);
 
                     b.Property<string>("EmailAdress")
                         .IsRequired()
@@ -44,10 +47,42 @@ namespace BookingSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Plan")
+                    b.Property<int>("PlanID")
                         .HasColumnType("int");
 
+                    b.HasKey("CustomerID");
+
+                    b.HasIndex("PlanID");
+
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("BookingSystem.Models.Domain.Plans", b =>
+                {
+                    b.Property<int>("PlanID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlanID"), 1L, 1);
+
+                    b.Property<string>("Plan")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PlanID");
+
+                    b.ToTable("Plans");
+                });
+
+            modelBuilder.Entity("BookingSystem.Models.Domain.Customers", b =>
+                {
+                    b.HasOne("BookingSystem.Models.Domain.Plans", "Plans")
+                        .WithMany()
+                        .HasForeignKey("PlanID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Plans");
                 });
 #pragma warning restore 612, 618
         }

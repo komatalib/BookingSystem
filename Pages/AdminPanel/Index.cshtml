@@ -32,18 +32,18 @@
 </div>
 <div class="mb-3">
         <label for="selectPlan" class="col-form-label">Plan</label>
-        <select id="selectPlan" name="CategoryId" class="form-control w-50">
+        <select id="selectPlan" name="AddCustomer.PlanID" class="form-control w-50">
             @foreach (var plan in Model.Plans)
             {
                 <option value="@plan.PlanID">@plan.Plan</option>
             }
         </select>
 
-    
-    <input type="number" class="form-control" asp-for="AddCustomer.Plan"/>
 </div>
 
 <div class="mb-3">
     <button type="submit" class="btn btn-primary">Save</button>
 </div>
 </form>
+
+

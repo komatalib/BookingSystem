@@ -1,0 +1,69 @@
+﻿@page
+@model BookingSystem.Pages.AdminPanel.TrainingsListModel
+@{
+}
+<h1>Trainings Schedule</h1>
+<div>
+    <p>DATE</p>
+</div>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                @for (int i = 0; i < 7; i++)
+                {
+                    var currentId = 54 + i;
+                    var rowData = Model.Date.FirstOrDefault(item => item.DateID == currentId);
+
+                    if (rowData != null)
+                    {
+
+                        <th>@rowData.Dates.ToShortDateString()</th>
+                        <!-- Kitos stulpelio reikšmės -->
+                    }
+                    else
+                    {
+                        <!-- Jei nėra duomenų su tokiu ID -->
+
+                        <th>No data</th>
+                        <!-- Kitos stulpelio reikšmės -->
+                    }
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var times in Model.Time)
+            {
+                <tr>
+                    <td>@times.Times.ToString("HH:mm")</td>
+                    @for (int i = 0; i < 7; i++)
+                    {
+                        var currentId = 54 + i;
+                        var rowData = Model.Date.FirstOrDefault(item => item.DateID == currentId);
+                        @foreach (var schedule in Model.Schedule)
+                        {
+                            var training = schedule.Training;
+                            var trainigData = Model.GroupTraining.FirstOrDefault(schedule => schedule.TrainingID == training);
+                            if (times.TimeID == schedule.Time && currentId==schedule.Date)
+                                {
+                                <td>
+                                    <select id="selectTraining" name="AddCustomer.PlanID" class="form-control w-50">
+                                        <option></option>
+                                        @foreach (var trainingData in Model.GroupTraining)
+                                        {
+                                            <option value="@trainingData.TrainingID" selected="@(trainingData.TrainingID == schedule.Training)">@trainingData.Training</option>
+                                        }
+                                    </select>
+                                    </td>
+                                } else
+                            {
+                                <td>NOPE</td>
+                            }
+                            }
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -26,19 +26,33 @@ namespace BookingSystem.Pages.AdminPanel
 
         public void OnPost()
         {
-            var addCustomerModel = new Customers
+            try
             {
-                FirstName = AddCustomer.FirstName,
-                LastName = AddCustomer.LastName,
-                EmailAdress = AddCustomer.EmailAdress,
-                Phone = AddCustomer.Phone,
-                Plan = AddCustomer.Plan
-            };
+                var addCustomerModel = new Customers
+                {
+                    FirstName = AddCustomer.FirstName,
+                    LastName = AddCustomer.LastName,
+                    EmailAdress = AddCustomer.EmailAdress,
+                    Phone = AddCustomer.Phone,
+                    PlanID = AddCustomer.PlanID
+                };
 
-            dbContext.Customers.Add(addCustomerModel);
-            dbContext.SaveChanges();
+                dbContext.Customers.Add(addCustomerModel);
+                dbContext.SaveChanges();
 
-            ViewData["Message"] = "Customer Created Successfully!";
+                OnGet();
+                ViewData["Message"] = "Customer Created Successfully!";
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex.Message);
+
+                OnGet();
+                // Set an error message
+                ViewData["Message"] = "Error creating customer. Please try again.";
+            }
         }
+
     }
 }
