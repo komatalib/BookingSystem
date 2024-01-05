@@ -4,9 +4,8 @@
 }
 <h1>Trainings Schedule</h1>
 <div>
-    <p>DATE</p>
-</div>
-<div>
+    <form method="post">
+        <button type="submit" class="btn btn-primary">Save</button>
     <table class="table">
         <thead>
             <tr>
@@ -43,27 +42,34 @@
                         var rowData = Model.Date.FirstOrDefault(item => item.DateID == currentId);
                         @foreach (var schedule in Model.Schedule)
                         {
+                            
                             var training = schedule.Training;
                             var trainigData = Model.GroupTraining.FirstOrDefault(schedule => schedule.TrainingID == training);
                             if (times.TimeID == schedule.Time && currentId==schedule.Date)
                                 {
-                                <td>
-                                    <select id="selectTraining" name="AddCustomer.PlanID" class="form-control w-50">
-                                        <option></option>
-                                        @foreach (var trainingData in Model.GroupTraining)
-                                        {
-                                            <option value="@trainingData.TrainingID" selected="@(trainingData.TrainingID == schedule.Training)">@trainingData.Training</option>
-                                        }
-                                    </select>
+                                    <td>
+                                        <a asp-page="./EditSchedule" asp-route-ScheduleID="@schedule.ScheduleID" class="btn btn-dark">@trainigData.Training</a>
                                     </td>
-                                } else
-                            {
-                                <td>NOPE</td>
-                            }
+                                } 
+                            else
+                                {
+                                    <td>
+                                        <form>
+                                            <div class="mb-3">
+                                                <input type="hidden" class="form-control " name="Tra" asp-for="EditCustomerViewModel.LastName" />
+                                            
+                                                <input type="hidden" class="form-control" name="EditCustomerViewModel.Phone" asp-for="EditCustomerViewModel.Phone" />
+                                            </div>
+                                        </form>
+                                        <button type="submit" class="btn btn-primary">Add</button>
+                                        <a asp-page="./EditSchedule" class="btn btn-dark">Add</a>                                        
+                                    </td>
+                                }
                             }
                     }
                 </tr>
             }
         </tbody>
     </table>
+    </form>
 </div>

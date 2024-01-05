@@ -1,0 +1,53 @@
+﻿@page
+@model BookingSystem.Pages.AdminPanel.EditScheduleModel
+@{
+
+    
+}
+
+<form method="post">
+    <h1 class="mb-3">Edit Customer</h1>
+
+    <!-- Include a hidden field to retain the CustomerID during form submission -->
+    <input type="hidden" name="" asp-for="TrainingCalendarViewModel.ScheduleID" />
+
+
+    <div class="mb-3">
+        <p>Time:</p>
+        
+            @foreach(var tm in Model.Time)
+            {
+                if (tm.TimeID==Model.TrainingCalendarViewModel.TimeID)
+                {
+                    <p>@tm.Times.ToShortTimeString()</p>
+                }                
+            }   
+    </div>
+    <div class="mb-3">
+        <p>Date:</p>
+        @foreach (var dt in Model.Date)
+        {
+            if (dt.DateID == Model.TrainingCalendarViewModel.DateID)
+            {
+                <p>@dt.Dates.ToShortDateString()</p>
+            }
+        }
+    </div>
+    <div class="mb-3">
+        <label for="selectTraining" class="col-form-label">Training:</label>
+        <select id="selectTraining" name="TrainingCalendarModel.TrainingID" class="form-control w-50">
+        @foreach (var tr in Model.GroupTraining)
+        {
+            <option value="@tr.TrainingID" selected="@(tr.TrainingID == Model.TrainingCalendarViewModel.TrainingID)">@tr.Training</option>
+        }
+        </select>
+    </div>
+     
+</select>
+
+
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+</form>
