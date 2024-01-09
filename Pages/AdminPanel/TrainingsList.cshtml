@@ -3,9 +3,6 @@
 @{
 }
 <h1>Trainings Schedule</h1>
-<div>
-    <form method="post">
-        <button type="submit" class="btn btn-primary">Save</button>
     <table class="table">
         <thead>
             <tr>
@@ -40,36 +37,46 @@
                     {
                         var currentId = 54 + i;
                         var rowData = Model.Date.FirstOrDefault(item => item.DateID == currentId);
-                        @foreach (var schedule in Model.Schedule)
-                        {
-                            
-                            var training = schedule.Training;
-                            var trainigData = Model.GroupTraining.FirstOrDefault(schedule => schedule.TrainingID == training);
-                            if (times.TimeID == schedule.Time && currentId==schedule.Date)
+                        bool checkTraining=false;
+                        var scheduleID = 0;
+                            @foreach (var schedule in Model.Schedule)
+                            {
+
+                                var training = schedule.Training;
+                                var trainigData = Model.GroupTraining.FirstOrDefault(schedule => schedule.TrainingID == training);
+
+                                if (times.TimeID == schedule.Time && currentId == schedule.Date)
                                 {
+                                    checkTraining = true;
+                                    scheduleID = schedule.ScheduleID;
+                                    break;
+                                }
+                            }
+                                @if (checkTraining)
+                                {
+                                var schedule = Model.Schedule.FirstOrDefault(item => item.ScheduleID == item.ScheduleID); 
+                                var training = schedule.Training;
+                                var trainigData = Model.GroupTraining.FirstOrDefault(schedule => schedule.TrainingID == training);
+
                                     <td>
-                                        <a asp-page="./EditSchedule" asp-route-ScheduleID="@schedule.ScheduleID" class="btn btn-dark">@trainigData.Training</a>
+                                        <a asp-page="./EditSchedule" asp-route-ScheduleID="@scheduleID" class="btn btn-dark">@trainigData.Training</a>
                                     </td>
-                                } 
+                                    @(checkTraining = false)                                    ;
+                                }
                             else
                                 {
                                     <td>
-                                        <form>
-                                            <div class="mb-3">
-                                                <input type="hidden" class="form-control " name="Tra" asp-for="EditCustomerViewModel.LastName" />
-                                            
-                                                <input type="hidden" class="form-control" name="EditCustomerViewModel.Phone" asp-for="EditCustomerViewModel.Phone" />
-                                            </div>
+                                        <form method="post">
+                                            <input type="hidden" class="form-control" asp-for="AddToSchedule.TrainingID" value="1" />
+                                            <input type="hidden" class="form-control" asp-for="AddToSchedule.DateID" value="@currentId" />
+                                            <input type="hidden" class="form-control" asp-for="AddToSchedule.TimeID" value="@times.TimeID"/>
+                                            <button type="submit" class="btn btn-primary">New</button>
                                         </form>
-                                        <button type="submit" class="btn btn-primary">Add</button>
-                                        <a asp-page="./EditSchedule" class="btn btn-dark">Add</a>                                        
                                     </td>
                                 }
-                            }
+                            
                     }
                 </tr>
             }
         </tbody>
     </table>
-    </form>
-</div>

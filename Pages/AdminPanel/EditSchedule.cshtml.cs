@@ -42,5 +42,11 @@ namespace BookingSystem.Pages.AdminPanel
                 };
             }
         }
+        public IActionResult OnPost()
+        {
+
+
+            return RedirectToPage("./TrainingsList");
+        }
     }
 }

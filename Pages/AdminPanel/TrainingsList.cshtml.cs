@@ -4,6 +4,7 @@ using BookingSystem.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace BookingSystem.Pages.AdminPanel
 {
@@ -31,18 +32,20 @@ namespace BookingSystem.Pages.AdminPanel
             TrainingBooking = dbContext.TrainingBooking.ToList();
             GroupTraining = dbContext.GroupTraining.ToList();
         }
-        public void OnPost()
+        public IActionResult OnPost()
         {
-            if (AddToSchedule.TrainingID==null)
-            {
-                var addSchedule = new Schedule
-                {
-                    Date = AddToSchedule.DateID,
-                    Time = AddToSchedule.TimeID,
-                    Training = AddToSchedule.TrainingID
-                };
-            }
             
+            var addSchedule = new Schedule
+            {
+                Date = AddToSchedule.DateID,
+                Time = AddToSchedule.TimeID,
+                Training = AddToSchedule.TrainingID
+                };
+                dbContext.Schedule.Add(addSchedule);
+                dbContext.SaveChanges();
+            var redirectID = addSchedule.ScheduleID;
+
+            return RedirectToPage("./EditSchedule", new { ScheduleID = redirectID });
         }
     }
 }
