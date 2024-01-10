@@ -14,12 +14,12 @@
 
     <div class="mb-3">
         <p>Time:</p>
-            
+
             @foreach(var tm in Model.Time)
             {
                 if (tm.TimeID==Model.TrainingCalendarViewModel.TimeID)
                 {
-                    <p>@tm.Times.ToShortTimeString()</p>
+                    <p asp-for="TrainingCalendarViewModel.TimeID" value="@tm.TimeID">@tm.Times.ToShortTimeString()</p>
                 }                
             }   
     </div>
@@ -29,13 +29,13 @@
         {
             if (dt.DateID == Model.TrainingCalendarViewModel.DateID)
             {
-                <p>@dt.Dates.ToShortDateString()</p>
+                <p asp-for ="TrainingCalendarViewModel.DateID" value="@dt.DateID">@dt.Dates.ToShortDateString()</p>
             }
         }
     </div>
     <div class="mb-3">
         <label for="selectTraining" class="col-form-label">Training:</label>
-        <select id="selectTraining" name="TrainingCalendarModel.TrainingID" class="form-control w-50">
+        <select id="selectTraining" name="TrainingCalendarViewModel.TrainingID" class="form-control w-50">
         @foreach (var tr in Model.GroupTraining)
         {
             <option value="@tr.TrainingID" selected="@(tr.TrainingID == Model.TrainingCalendarViewModel.TrainingID)">@tr.Training</option>
@@ -43,11 +43,12 @@
         </select>
     </div>
      
-</select>
 
-
-    </div>
     <div class="mb-3">
         <button type="submit" class="btn btn-primary">Update</button>
+        <a asp-page-handler="Delete" asp-route-ScheduleID="@Model.TrainingCalendarViewModel.ScheduleID" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this customer?')">Delete</a>
+
+          
+
     </div>
 </form>

@@ -4,6 +4,7 @@ using BookingSystem.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace BookingSystem.Pages.AdminPanel
 {
@@ -44,8 +45,35 @@ namespace BookingSystem.Pages.AdminPanel
         }
         public IActionResult OnPost()
         {
+            if (TrainingCalendarViewModel != null)
+            {
 
 
+                var thisSchedule = dbContext.Schedule.FirstOrDefault(w => w.ScheduleID == ScheduleID);
+                if (thisSchedule != null)
+                {
+                    thisSchedule.Training = TrainingCalendarViewModel.TrainingID; 
+
+                    dbContext.SaveChanges();
+                }
+            }
+
+                return RedirectToPage("./TrainingsList");
+        }
+        
+        public IActionResult OnGetDelete(int ScheduleID)
+        {
+            var schedule = dbContext.Schedule.Find(ScheduleID);
+
+            if (schedule == null)
+            {
+                return NotFound();
+            }
+
+            dbContext.Schedule.Remove(schedule);
+            dbContext.SaveChanges();
+
+            TempData["Message"] = "Schedule deleted successfully!";
             return RedirectToPage("./TrainingsList");
         }
     }

@@ -54,14 +54,14 @@
                             }
                                 @if (checkTraining)
                                 {
-                                var schedule = Model.Schedule.FirstOrDefault(item => item.ScheduleID == item.ScheduleID); 
+                                var schedule = Model.Schedule.FirstOrDefault(item => item.ScheduleID == scheduleID); 
                                 var training = schedule.Training;
                                 var trainigData = Model.GroupTraining.FirstOrDefault(schedule => schedule.TrainingID == training);
 
                                     <td>
                                         <a asp-page="./EditSchedule" asp-route-ScheduleID="@scheduleID" class="btn btn-dark">@trainigData.Training</a>
-                                    </td>
-                                    @(checkTraining = false)                                    ;
+                           
+                                    </td>                                ;
                                 }
                             else
                                 {

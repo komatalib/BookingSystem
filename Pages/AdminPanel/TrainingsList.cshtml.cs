@@ -47,5 +47,6 @@ namespace BookingSystem.Pages.AdminPanel
 
             return RedirectToPage("./EditSchedule", new { ScheduleID = redirectID });
         }
+        
     }
 }
