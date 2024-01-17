@@ -6,7 +6,7 @@
 }
 
 <form method="post">
-    <h1 class="mb-3">Edit Customer</h1>
+    <h1 class="mb-3">Manage Training</h1>
 
     <!-- Include a hidden field to retain the CustomerID during form submission -->
     <input type="hidden" name="" asp-for="TrainingCalendarViewModel.ScheduleID" />
@@ -17,6 +17,7 @@
 
             @foreach(var tm in Model.Time)
             {
+                Console.WriteLine("iehvhedvuheuvheivjiev " + Model.TrainingCalendarViewModel.TimeID);
                 if (tm.TimeID==Model.TrainingCalendarViewModel.TimeID)
                 {
                     <p asp-for="TrainingCalendarViewModel.TimeID" value="@tm.TimeID">@tm.Times.ToShortTimeString()</p>
@@ -48,7 +49,51 @@
         <button type="submit" class="btn btn-primary">Update</button>
         <a asp-page-handler="Delete" asp-route-ScheduleID="@Model.TrainingCalendarViewModel.ScheduleID" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this customer?')">Delete</a>
 
-          
-
     </div>
 </form>
+
+<h2>Register customer to training:</h2>
+        <form method="post" asp-page-handler="AddToTraining">
+            <input type="hidden" asp-for="TrainingCalendarViewModel.ScheduleID" />
+            <input type="hidden" asp-for="bookingViewModel.ScheduleID" />
+            <label asp-for="bookingViewModel.CustomerID"></label>
+            <input asp-for="bookingViewModel.CustomerID" class="form-control w-50" />
+            <button type="submit" class="btn btn-primary">Add To Training</button>
+        </form>
+    
+<h3>Registered customers:</h3>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var booking in Model.TrainingBooking.Where(b => b.ScheduleID == Model.bookingViewModel.ScheduleID))
+    {
+        var custID = Model.Customers.FirstOrDefault(item => item.CustomerID == booking.CustomerID);
+
+        <tr>
+            <td>@booking.CustomerID</td>
+            <td>
+                @if (custID != null)
+                {
+                    @custID.FirstName @: @custID.LastName
+                }
+                else
+                {
+                    <span style="color: red;">Customer not found</span>
+                }
+            </td>
+            <td>
+                <a asp-page-handler="DeleteTraining" asp-route-BookingID="@booking.BookingID" class="btn btn-danger" onclick="return confirm('Are you sure you want to remove this customer from training?')">Remove</a>
+            </td>
+        </tr>
+    }
+</tbody>
+
+    </table>

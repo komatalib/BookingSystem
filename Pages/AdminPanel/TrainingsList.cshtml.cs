@@ -40,7 +40,7 @@ namespace BookingSystem.Pages.AdminPanel
                 Date = AddToSchedule.DateID,
                 Time = AddToSchedule.TimeID,
                 Training = AddToSchedule.TrainingID
-                };
+            };
                 dbContext.Schedule.Add(addSchedule);
                 dbContext.SaveChanges();
             var redirectID = addSchedule.ScheduleID;

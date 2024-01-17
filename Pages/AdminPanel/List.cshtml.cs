@@ -8,7 +8,7 @@ namespace BookingSystem.Pages.AdminPanel
     public class ListModel : PageModel
     {
         private readonly BSDbContext dbContext;
-        public List<Models.Domain.Customers> Customers { get; set; }
+        public List<Customers> Customers { get; set; }
         [BindProperty]
         public List<Plans> Plans { get; set; }
         public int CustomerID { get; set; }

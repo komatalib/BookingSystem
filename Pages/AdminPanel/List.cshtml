@@ -10,6 +10,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Name</th>
                 <th>Surname</th>
                 <th>Phone</th>
@@ -23,6 +24,7 @@
             @foreach(var customer in Model.Customers)
             {
                 <tr>
+                    <td>@customer.CustomerID</td>
                     <td>@customer.FirstName</td>
                     <td>@customer.LastName</td>
                     <td>@customer.Phone</td>
